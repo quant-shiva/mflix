@@ -48,7 +48,7 @@ const MovieSchema = new schema({
     rating: {
       type: Number
     },
-    voting: {
+    votes: {
       type: Number
     }
   },

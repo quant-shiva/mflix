@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
 const db = require("./setup/myurl").dbUrl;
 const movies = require("./api/public/movies");
+const update = require("./api/public/update");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
@@ -14,5 +15,6 @@ mongoose
   .catch(err => console.log(err));
 
 app.use("/api/movies/", movies);
+app.use("/api/update/", update);
 
 app.listen(5000, () => console.log("app is listening at port 5000..."));
