@@ -4,7 +4,7 @@ const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
 const db = require("./setup/myurl").dbUrl;
 const movies = require("./api/public/movies");
-const update = require("./api/public/update");
+const update = require("./api/private/update");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
