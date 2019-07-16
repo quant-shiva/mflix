@@ -1,24 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const Movies = require("../../models/Movies");
+const PromoMovies = require("../../models/PromoMovies");
 
 //@type   GET
-//@route  /api/movies
+//@route  /api/movies/find
 //@desc   route for fetching all movies
 //@access PUBLIC
 router.get("/", (req, res) => {
-  Movies.find()
-    .then(movies => {
-      if (movies.length == 0) {
-        res.status(500).end();
-      } else {
-        res.json(movies);
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).end();
-    });
+  PromoMovies.find().then(movies => {
+    var promomovie = [];
+    for(let i=0;i<20;i++){
+      promomovie[i] = movies[i];
+    }
+    res.render("index.ejs", { promomovie });
+  });
 });
 
 //@type   GET
@@ -27,7 +23,19 @@ router.get("/", (req, res) => {
 //@access PUBLIC
 router.get("/:id", (req, res) => {
   Movies.find({ _id: req.params.id })
-    .then(movie => res.json(movie))
+    .then(movie => {
+      var doc = {
+        title: movie[0].title,
+        poster_path: movie[0].poster_path,
+        genres: movie[0].genres,
+        spoken_languages: movie[0].spoken_languages,
+        imdb_id: movie[0].imdb_id
+      };
+      PromoMovies.create(doc)
+        .then("document saved!!!")
+        .catch(err => console.log(err));
+      res.json(doc);
+    })
     .catch(err => console.log(err));
 });
 
@@ -49,7 +57,6 @@ router.get("/title/:movie_name", (req, res) => {
     });
 });
 
-
 //@type   GET
 //@route  /api/movies/genre/:genre
 //@desc   route for fetching movies by genre
@@ -64,47 +71,46 @@ router.get("/genre/:genre", (req, res) => {
         }
       }
     }
-  ]).then(movies => {
-      if(movies.length==0){
-          res.status(404).send("please enter correct genre!!!")
+  ])
+    .then(movies => {
+      if (movies.length == 0) {
+        res.status(404).send("please enter correct genre!!!");
+      } else {
+        res.json(movies);
       }
-      else{
-          res.json(movies)
-      }
-     })
-     .catch(err=>{
-         console.log(err);
-         res.status(500).end();
-     })
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).end();
+    });
 });
-
 
 //@type   GET
 //@route  /api/movies/language/:language
 //@desc   route for fetching movies by genre
 //@access PUBLIC
 router.get("/language/:lang", (req, res) => {
-    let query = req.params.lang[0].toUpperCase() + req.params.lang.slice(1);
-    Movies.aggregate([
-        {
-            $match: {
-                languages: {
-                    $in: [query, "$languages"]
-                }
-            }
+  let query = req.params.lang[0].toUpperCase() + req.params.lang.slice(1);
+  Movies.aggregate([
+    {
+      $match: {
+        languages: {
+          $in: [query, "$languages"]
         }
-    ]).then(movies => {
-        if (movies.length == 0) {
-            res.status(404).send("please enter correct language!!!")
-        }
-        else {
-            res.json(movies)
-        }
+      }
+    }
+  ])
+    .then(movies => {
+      if (movies.length == 0) {
+        res.status(404).send("please enter correct language!!!");
+      } else {
+        res.json(movies);
+      }
     })
-        .catch(err => {
-            console.log(err);
-            res.status(500).end();
-        })
+    .catch(err => {
+      console.log(err);
+      res.status(500).end();
+    });
 });
 
 module.exports = router;

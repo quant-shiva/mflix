@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Movies = require("../../models/Movies");
+const PromoMovies = require("../../models/PromoMovies");
 
 //@type   POST
 //@route  /api/update
@@ -33,9 +34,9 @@ router.post("/", (req, res) => {
     if (req.body.imdb.votes) updated_doc.imdb.votes = req.body.imdb.votes;
   }
 
-    Movies.findByIdAndUpdate(req.body.id, updated_doc, { new: true })
-      .then(movie => res.json(movie))
-      .catch(err => console.log(err));
+  Movies.findByIdAndUpdate(req.body.id, updated_doc, { new: true })
+    .then(movie => res.json(movie))
+    .catch(err => console.log(err));
   console.log(req.body);
 });
 
@@ -63,13 +64,45 @@ router.post("/new", (req, res) => {
     rated: req.body.rated,
     released: req.body.released,
     lastUpdated: Date.now(),
+    imdb: req.body.imdb
+  });
+  new_movie
+    .save()
+    .then(movie => res.json(movie))
+    .catch(err => console.log(err));
+});
+
+//@type   POST
+//@route  /api/update/promo
+//@desc   route for adding new movie to list
+//@access PRIVATE
+router.post("/promo", (req, res) => {
+  const new_promo_movie = new PromoMovies({
+    title: req.body.title,
+    year: req.body.year,
+    runtime: req.body.runtime,
+    metacritic: req.body.metacritic,
+    poster: req.body.poster,
+    plot: req.body.plot,
+    awards: req.body.awards,
+    type: req.body.type,
+    directors: req.body.directors,
+    actors: req.body.actors,
+    writers: req.body.writers,
+    genres: req.body.genres,
+    languages: req.body.languages,
+    countries: req.body.countries,
+    fullPlot: req.body.fullPlot,
+    rated: req.body.rated,
+    released: req.body.released,
+    lastUpdated: Date.now(),
     imdb: {
       id: req.body.imdb.id,
       rating: req.body.imdb.rating,
       votes: req.body.imdb.votes
     }
   });
-  new_movie
+  new_promo_movie
     .save()
     .then(movie => res.json(movie))
     .catch(err => console.log(err));

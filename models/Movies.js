@@ -2,61 +2,72 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const MovieSchema = new schema({
-  title: {
+  adult: {
     type: String
   },
-  year: {
-    type: Number
+  belongs_to_collection: [],
+  budget: {
+    type: String
+  },
+  genres: [],
+  homepage: {
+    type: String
+  },
+  id: {
+    type: String
+  },
+  imdb_id: {
+    type: String
+  },
+  original_language: {
+    type: String
+  },
+  original_title: {
+    type: String
+  },
+  overview: {
+    type: String
+  },
+  popularity: {
+    type: String
+  },
+  poster_path: {
+    type: String
+  },
+  production_companies: [],
+  production_countries: [],
+  release_date: {
+    type: String
+  },
+  revenue: {
+    type: String
   },
   runtime: {
     type: String
   },
-  metacritic: {
+  spoken_languages: [],
+  status: {
     type: String
   },
-  poster: {
+  tagline: {
     type: String
   },
-  plot: {
+  title: {
     type: String
   },
-  awards: {
+  video: {
     type: String
   },
-  type: {
+  vote_average: {
     type: String
   },
-  directors: [],
-  actors: [],
-  writers: [],
-  genres: [],
-  languages: [],
-  countries: [],
-  fullPlot: {
+  vote_count: {
     type: String
-  },
-  rated: {
-    type: String
-  },
-  released: {
-    type: Date
-  },
-  imdb: {
-    id: {
-      type: Number
-    },
-    rating: {
-      type: Number
-    },
-    votes: {
-      type: Number
-    }
-  },
-  lastUpdated: { type: Date, default: Date.now }
+  }
 });
 
 module.exports = Movies = mongoose.model(
-  "movies_scratch",
+  "movie_list",
   MovieSchema,
-  "movies_scratch"
+  "movie_list"
 );

@@ -1,0 +1,57 @@
+.card {
+  background: darkgreen;
+}
+
+ul {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+li {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+.jumbotron {
+  color: green;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 400px;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.form-inline {
+  margin-right: 50%;
+}
+
+.nav-link {
+  color: green;
+}
+
+#search {
+  width: 400px;
+  background-color: lightgreen;
+}
+
+.btn {
+  background-color: grey;
+  color: purple;
+}
+
+.imgdiv {
+  height: 24rem;
+  color: green;
+  margin-right: 1.5%;
+  padding: 0%;
+  margin-bottom: 2%;
+}
+
+.img1 {
+  height: 100%;
+  width: 100%;
+  margin: 0%;
+  padding: 0%;
+}
